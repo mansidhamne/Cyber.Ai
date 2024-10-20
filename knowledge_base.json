@@ -1,0 +1,228 @@
+{
+    "domains": {
+      "authentication": {
+        "name": "authentication",
+        "keywords": ["password", "authentication", "login", "credentials", "mfa", "2fa", "identity"],
+        "best_practices": [
+          "multi-factor authentication",
+          "password complexity requirements",
+          "regular credential rotation",
+          "biometric authentication", 
+          "single sign-on"
+        ],
+        "risk_indicators": [
+          "simple password",
+          "shared accounts",
+          "no MFA",
+          "long expiration",
+          "plain text storage"
+        ],
+        "follow_up_templates": [
+          "How do you handle {topic} rotation?",
+          "What monitoring is in place for {topic}?",
+          "How do you audit {topic} usage?",
+          "What backup mechanisms exist for {topic}?"
+        ]
+      },
+      "network_security": {
+        "name": "network_security",
+        "keywords": ["firewall", "network", "vpn", "routing", "traffic", "gateway", "dns"],
+        "best_practices": [
+          "network segmentation",
+          "encrypted traffic", 
+          "regular security scans",
+          "intrusion detection",
+          "traffic monitoring"
+        ],
+        "risk_indicators": [
+          "open ports",
+          "unencrypted traffic",
+          "public access",
+          "no monitoring",
+          "legacy protocols"
+        ],
+        "follow_up_templates": [
+          "How do you monitor {topic}?",
+          "What controls are in place for {topic}?",
+          "How often do you review {topic} configurations?",
+          "What backup measures exist for {topic}?"
+        ]
+      },
+      "compliance": {
+        "name": "compliance", 
+        "keywords": ["gdpr", "hipaa", "pci", "sox", "compliance", "regulation", "audit"],
+        "best_practices": [
+          "regular audits",
+          "documentation maintenance",
+          "staff training",
+          "incident response plan",
+          "compliance monitoring"
+        ],
+        "risk_indicators": [
+          "no documentation",
+          "missed audits", 
+          "untrained staff",
+          "no controls",
+          "manual processes"
+        ],
+        "follow_up_templates": [
+          "How do you ensure ongoing {topic} compliance?",
+          "What documentation exists for {topic}?",
+          "How do you track {topic} requirements?",
+          "What training is provided for {topic}?"
+        ]
+      },
+      "application_security": {
+        "name": "application_security",
+        "keywords": ["application", "vulnerability", "injection", "XSS", "secure development", "OWASP"],
+        "best_practices":[
+              "secure coding practices",
+              "vulnerability scans",
+              "regular patching",
+              "input validation",
+              "secure APIs"
+          ],
+          "risk_indicators":[
+              "untested code",
+              "lack of vulnerability management",
+              "open APIs",
+              "insecure data storage"
+          ],
+          "follow_up_templates":[
+              "What secure coding practices are enforced for {topic}?",
+              "How often do you perform vulnerability scans for {topic}?",
+              "How do you ensure input validation for {topic} applications?",
+              "What controls are in place for {topic} security?"
+          ]
+        },
+      "cloud_security": {
+        "name":"cloud_security",
+        "keywords":["cloud", "aws", "azure", "gcp", "bucket", "s3", "iaas", "paas", "data storage", "cloud computing"],
+        "best_practices":[
+            "encrypted storage",
+            "IAM policies",
+            "security groups",
+            "regular audits",
+            "cloud access security broker (CASB}"
+        ],
+        "risk_indicators":[
+            "open storage buckets",
+            "weak IAM policies",
+            "insecure cloud configurations"
+        ],
+        "follow_up_templates":[
+            "How do you manage IAM policies for {topic}?",
+            "What controls are in place for {topic} storage?",
+            "How often do you review {topic} configurations?"
+        ]
+      },
+      "identity_and_access_management": {
+          "name":"identity_and_access_management",
+          "keywords":["access control", "IAM", "permissions", "roles", "identity", "authentication", "authorization", "roles", "MFA"],
+          "best_practices":[
+              "role-based access control (RBAC}",
+              "least privilege",
+              "multi-factor authentication (MFA}",
+              "SSO",
+              "user activity monitoring"
+          ],
+          "risk_indicators":[
+              "overly broad access",
+              "no MFA",
+              "unused accounts",
+              "shared credentials"
+          ],
+          "follow_up_templates":[
+              "How do you enforce least privilege access for {topic}?",
+              "What is your process for revoking access to unused {topic} accounts?",
+              "How is access to sensitive {topic} systems monitored?"
+          ]
+      },
+      "data_security": {
+          "name":"data_security",
+          "keywords":["encryption", "storage", "data", "backup", "DLP", "at rest", "in transit", "privacy", "leakage"],
+          "best_practices":[
+            "data encryption at rest and in transit", 
+            "regular backups", 
+            "data loss prevention (DLP}", 
+            "access controls"
+          ],
+          "risk_indicators":["unencrypted data", "insufficient backups", "no DLP"],
+          "follow_up_templates":[
+              "How is sensitive {topic} encrypted?",
+              "What {topic} backup processes do you have in place?",
+              "How do you prevent {topic} leakage?"
+          ]
+      },
+      "incident_response": {
+          "name":"incident_response",
+          "keywords":["incident", "breach", "response", "detection", "plan", "forensics", "alerts", "IRP", "SOC"],
+          "best_practices":["defined incident response plan", "breach detection", "regular IRP testing", "post-incident reviews"],
+          "risk_indicators":["no response plan", "slow breach detection", "no alerting mechanism", "lack of forensic capabilities"],
+          "follow_up_templates":[
+              "What is your process for {topic} detection?",
+              "How often do you test the {topic} response plan?",
+              "What alerting mechanisms are in place for {topic} incidents?"
+          ]
+      },
+      "security_monitoring_and_logging": {
+          "name":"security_monitoring_and_logging",
+          "keywords":["monitoring", "logging", "siem", "events", "logs", "alerts", "correlation", "network monitoring"],
+          "best_practices":["centralized log management", "continuous monitoring", "SIEM integration", "real-time alerting"],
+          "risk_indicators":["no centralized logging", "delayed monitoring", "weak alerting", "lack of correlation rules"],
+          "follow_up_templates":[
+              "How is {topic} log data centralized and analyzed?",
+              "What real-time {topic} alerts do you use for potential threats?",
+              "How often are {topic} monitoring rules reviewed?"
+          ]
+      },
+      "disaster_recovery_and_business_continuity": {
+          "name":"disaster_recovery_and_business_continuity",
+          "keywords":["disaster recovery", "BCP", "backup", "continuity", "RTO", "RPO", "recovery plan", "failover"],
+          "best_practices":["defined recovery time objective (RTO} and recovery point objective (RPO}", "regular plan testing", "off-site backups"],
+          "risk_indicators":["no DR/BCP plan", "incomplete backups", "untested recovery processes"],
+          "follow_up_templates":[
+              "What is your {topic} plan's RTO and RPO?",
+              "How often do you test {topic} recovery procedures?",
+              "Where are your {topic} backup sites located?"
+          ]
+      },
+      "physical_security": {
+          "name":"physical_security",
+          "keywords":["physical access", "badge", "surveillance", "locks", "biometric", "doors", "facility", "data center", "perimeter"],
+          "best_practices":["controlled physical access", "CCTV", "visitor management", "biometric access", "security guards"],
+          "risk_indicators":["unmonitored access", "weak physical security", "no visitor logs"],
+          "follow_up_templates":[
+              "How is {topic} access to sensitive areas controlled?",
+              "What {topic} physical security measures are in place for your data centers?",
+              "How often are {topic} access logs reviewed?"
+          ]
+      },
+      "vulnerability_management": {
+          "name":"vulnerability_management",
+          "keywords":["vulnerabilities", "scanning", "patching", "updates", "exploit", "CVE", "zero-day", "software"],
+          "best_practices":["regular vulnerability scans", "prompt patch management", "CVE tracking", "automated updates"],
+          "risk_indicators":["missed patches", "outdated systems", "unscanned infrastructure"],
+          "follow_up_templates":[
+              "How often are {topic} vulnerability scans conducted?",
+              "What is the {topic} patch management process?",
+              "How do you track {topic} zero-day vulnerabilities?"
+          ]
+      }
+
+    },
+    "risk_thresholds": {
+      "authentication": 0.75,
+      "network_security": 0.7,
+      "compliance": 0.65,
+      "endpoint_security": 0.7,
+      "application_security": 0.8,
+      "cloud_security": 0.75,
+      "data_security": 0.7,
+      "incident_response": 0.65,
+      "identity_and_access_management": 0.85,
+      "vulnerability_management": 0.55,
+      "physical_security": 0.60,
+      "security_monitoring_and_logging": 0.65,
+    }
+  }
