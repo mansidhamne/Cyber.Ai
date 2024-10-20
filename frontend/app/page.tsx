@@ -115,7 +115,7 @@ export default function LandingPage() {
                 transition={{ duration: 0.5 }}
               >
                 Unbreakable security.<br />
-                It's possible. It's CyberGuard.
+                It's possible. It's Cyber.AI.
               </motion.h1>
               <motion.p 
                 className="text-xl text-gray-800 mb-8"
@@ -123,7 +123,7 @@ export default function LandingPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
-                Navigate the dark alleys of your digital infrastructure with our AI-driven cybersecurity assessment bot. Stay one step ahead in the unforgiving cyber landscape.
+                Navigate your digital infrastructure with our AI-driven cybersecurity assessment bot and stay ahead in the ever evolving cyber landscape.
               </motion.p>
               <motion.div 
                 className="space-x-4"
@@ -202,7 +202,7 @@ export default function LandingPage() {
               </div>
             </div>
             <div className="mt-8 pt-8 border-t border-gray-700 text-center text-gray-400">
-              <p>&copy; 2024 CyberGuard. All rights reserved.</p>
+              <p>&copy; 2024 Cyber.AI. All rights reserved.</p>
             </div>
           </div>
         </footer>
@@ -231,7 +231,7 @@ function Navbar({ className }: { className?: string }) {
         <div className="flex justify-between items-center h-16">
           <Link href="/" className="flex items-center space-x-2">
             <Shield className="w-8 h-8 text-blue-600" />
-            <span className="font-extrabold text-blue-700 text-xl">CyberGuard AI</span>
+            <span className="font-extrabold text-blue-700 text-xl">Cyber.AI</span>
           </Link>
           
           <div className="hidden md:flex items-center space-x-6 font-semibold">

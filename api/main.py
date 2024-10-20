@@ -1,3 +1,26 @@
+from fastapi import FastAPI, UploadFile, File
+from fastapi.responses import JSONResponse
+import PyPDF2
+import torch
+import transformers
+from transformers import RobertaTokenizerFast
+import os
+import os
+from fastapi import FastAPI, File, UploadFile, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+
+# Initialize FastAPI app
+app = FastAPI()
+# Enable CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
 import os
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -189,6 +212,113 @@ async def summarize(file: UploadFile = File(...)):
         return {"summary": summary}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
+    
+# Load the SecureBERT model and tokenizer
+tokenizer = RobertaTokenizerFast.from_pretrained("ehsanaghaei/SecureBERT")
+model = transformers.RobertaForMaskedLM.from_pretrained("ehsanaghaei/SecureBERT")
+
+# Predefined security terms for masking
+security_terms_corpus = ["firewall", "malware", "intrusion", "encryption", "phishing", "DDoS"]  # Sample terms
+
+def extract_text_from_pdf(pdf_file_path):
+    """Extract text from a PDF file."""
+    pdf_reader = PyPDF2.PdfReader(pdf_file_path)
+    extracted_text = ""
+    for page_num in range(len(pdf_reader.pages)):
+        page = pdf_reader.pages[page_num]
+        extracted_text += page.extract_text()
+    return extracted_text
+
+def create_text_chunks(text, chunk_size=512):
+    """Split text into smaller chunks."""
+    chunks = [text[i:i + chunk_size] for i in range(0, len(text), chunk_size)]
+    return chunks
+
+def create_mask(chunks, security_terms_corpus):
+    """Replace security terms in chunks with <mask>."""
+    masked_chunks = []
+    for chunk in chunks:
+        input_words = chunk.split()
+        for i in range(len(input_words)):
+            if input_words[i].lower() in security_terms_corpus:
+                input_words[i] = '<mask>'
+        masked_chunks.append(' '.join(input_words))
+    return masked_chunks
+
+def create_chunks(text, max_length=510):
+    """Create tokenized chunks of text."""
+    tokens = tokenizer.encode(text, add_special_tokens=True)
+    chunks = [tokens[i:i + max_length] for i in range(0, len(tokens), max_length)]
+    decoded_chunks = [tokenizer.decode(chunk, skip_special_tokens=False) for chunk in chunks]
+    return decoded_chunks
+
+def predict_mask(sent, tokenizer, model, topk=10):
+    """Predict words for <mask> tokens in a sentence."""
+    token_ids = tokenizer.encode(sent, return_tensors='pt', add_special_tokens=True)
+    masked_position = (token_ids.squeeze() == tokenizer.mask_token_id).nonzero()
+    masked_pos = [mask.item() for mask in masked_position]
+    words = []
+
+    with torch.no_grad():
+        output = model(token_ids)
+
+    last_hidden_state = output[0].squeeze()
+
+    list_of_list = []
+    for mask_index in masked_pos:
+        mask_hidden_state = last_hidden_state[mask_index]
+        idx = torch.topk(mask_hidden_state, k=topk, dim=0)[1]
+        words = [tokenizer.decode(i.item()).strip() for i in idx]
+        words = [w.replace(' ', '') for w in words]
+        list_of_list.append(words)
+
+    return list_of_list
+
+def generate_vulnerabilities(predictions, security_terms_corpus):
+    """Generate a list of vulnerabilities."""
+    vulnerabilities = []
+    for sublist in predictions:
+        for item in sublist:
+            if item not in security_terms_corpus:
+                vulnerabilities.append(item)
+    return vulnerabilities
+
+@app.post("/vulnerabilities/")
+async def extract_vulnerabilities(pdf: UploadFile = File(...)):
+    """API endpoint to extract vulnerabilities from a PDF."""
+    # Save the uploaded PDF file
+    pdf_path = f"temp_{pdf.filename}"
+    with open(pdf_path, "wb") as f:
+        f.write(await pdf.read())
+    
+    # Extract text from the PDF
+    doc_text = extract_text_from_pdf(pdf_path)
+    
+    # Remove the temp file
+    os.remove(pdf_path)
+    
+    # Create text chunks and mask terms
+    chunks = create_text_chunks(doc_text, chunk_size=512)
+    masked_chunks = create_mask(chunks, security_terms_corpus)
+    
+    # Perform mask prediction
+    predictions = []
+    for chunk in masked_chunks:
+        tokenized_chunks = create_chunks(chunk)
+        for tokenized_chunk in tokenized_chunks:
+            predicted_words = predict_mask(tokenized_chunk, tokenizer, model, topk=10)
+            predictions.extend(predicted_words)
+    
+    # Generate vulnerabilities based on predictions
+    vulnerabilities = generate_vulnerabilities(predictions, security_terms_corpus)
+    
+    # Return the vulnerabilities as a JSON response
+    return JSONResponse(content={"vulnerabilities": vulnerabilities})
+
+# Run the app using Uvicorn
+# Command: uvicorn main:app --reload
+# Run the app using Uvicorn
+# Command: uvicorn main:app --reload
 
 if __name__ == "__main__":
     import uvicorn

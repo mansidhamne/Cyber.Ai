@@ -121,8 +121,7 @@ export default function LandingPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
-                Navigate the dark alleys of your digital infrastructure with our AI-driven cybersecurity assessment bot. Stay one step ahead in the unforgiving cyber landscape.
-              </motion.p>
+Navigate your digital infrastructure with our AI-driven cybersecurity assessment bot and stay ahead in the ever-evolving cyber landscape.              </motion.p>
               <motion.div 
                 className="space-x-4"
                 initial={{ opacity: 0, y: 20 }}

@@ -2,17 +2,17 @@
 
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Send, Upload, ChevronLeft, ChevronRight, Maximize2, Minimize2, Shield, Bell } from 'lucide-react'
+import { Send, Upload, ChevronLeft, ChevronRight, Maximize2, Minimize2, Shield, Bell, Download } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
 import Link from 'next/link'
+import VulnerabilityReport from '../../components/VulnerabilityReport'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { UserButton } from '@clerk/nextjs'
 
-const BizBot = ({ onComplete }) => {
+const BizBot = ({ onComplete, onVulnerabilityReportGenerated }) => {
   const [file, setFile] = useState(null)
   const [questions, setQuestions] = useState([])
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
@@ -20,6 +20,7 @@ const BizBot = ({ onComplete }) => {
   const [conversation, setConversation] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [userName, setUserName] = useState('')
+  const [vulnerabilityReport, setVulnerabilityReport] = useState(null)
 
   useEffect(() => {
     fetchQuestions()
@@ -37,7 +38,7 @@ const BizBot = ({ onComplete }) => {
       ])
     } catch (error) {
       console.error('Error fetching questions:', error)
-      setConversation([{ type: 'bot', content: 'Sorry, I encountered an error while fetching questions. Please try again later.' }])
+      setConversation([{ type: 'bot', content: 'Hello, I am Cyber Bot. I have migrated to http://localhost:8501. ' }])
     }
     setIsLoading(false)
   }
@@ -51,20 +52,24 @@ const BizBot = ({ onComplete }) => {
 
     setIsLoading(true)
     try {
-      await axios.post('http://localhost:8000/upload', formData, {
+      const response = await axios.post('http://localhost:8000/vulnerabilities/', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       })
-      setConversation(prev => [...prev, { type: 'bot', content: `Great! I've successfully uploaded and parsed the file "${file.name}". Let's continue with our assessment.` }])
+      setVulnerabilityReport(response.data.vulnerabilities)
+      onVulnerabilityReportGenerated(response.data.vulnerabilities)
+      setConversation(prev => [...prev, { type: 'bot', content: `Great! I've analyzed the file "${file.name}" and generated a vulnerability report. Would you like to download it?` }])
     } catch (error) {
-      console.error('Error uploading file:', error)
-      setConversation(prev => [...prev, { type: 'bot', content: 'I apologize, but there was an error uploading the file. Could you please try again?' }])
+      console.error('Error uploading and analyzing file:', error)
+      setConversation(prev => [...prev, { type: 'bot', content: 'I apologize, but there was an error analyzing the file. Could you please try again?' }])
     }
     setIsLoading(false)
   }
 
   const handleAnswer = async () => {
     if (!answer.trim()) return
-
+    if (answer.toLowerCase() === 'yes' && vulnerabilityReport) {
+      setConversation(prev => [...prev, { type: 'bot', content: "I've initiated the download of the vulnerability report. Is there anything else you'd like to know about the vulnerabilities?" }])
+    }
     if (!userName) {
       setUserName(answer)
       setConversation(prev => [
@@ -90,20 +95,7 @@ const BizBot = ({ onComplete }) => {
             setConversation(prev => [...prev, { type: 'bot', content: questions[currentQuestionIndex + 1].question }])
           } else {
             setConversation(prev => [...prev, { type: 'bot', content: "Great! We've completed all the questions. I'll now generate your assessment results." }])
-            onComplete({
-              documentSummary: [
-                "Infrastructure consists of 3 web servers and 2 database servers",
-                "Web servers are running Apache 2.4 on Ubuntu 20.04",
-                "Database servers are using MySQL 8.0",
-                "Firewall is configured but some ports are open for development purposes"
-              ],
-              vulnerabilityReport: [
-                { title: "Outdated Apache Version", description: "Apache 2.4 has known vulnerabilities. Upgrade to the latest version." },
-                { title: "Open Ports", description: "Several unnecessary ports are open, increasing attack surface." },
-                { title: "Weak Password Policy", description: "Current password policy does not meet industry standards." }
-              ],
-              riskScore: 65
-            })
+            // Note: The onComplete function call has been removed as it's not clear where the results are coming from
           }
         }
       } catch (error) {
@@ -183,6 +175,7 @@ const HomePage = () => {
   const [isNewsFeedOpen, setIsNewsFeedOpen] = useState(true)
   const [isChatbotMaximized, setIsChatbotMaximized] = useState(false)
   const [newsItems, setNewsItems] = useState([])
+  const [vulnerabilityReport, setVulnerabilityReport] = useState(null)
   const router = useRouter()
 
   useEffect(() => {
@@ -201,17 +194,30 @@ const HomePage = () => {
     })
   }
 
+  const handleVulnerabilityReportGenerated = (report) => {
+    setVulnerabilityReport(report)
+  }
+
+  const downloadReport = () => {
+    const element = document.createElement("a")
+    const file = new Blob([JSON.stringify(vulnerabilityReport, null, 2)], {type: 'text/plain'})
+    element.href = URL.createObjectURL(file)
+    element.download = "vulnerability_report.txt"
+    document.body.appendChild(element)
+    element.click()
+  }
+
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 to-white">
-      {/* Navbar */}
       <nav className="bg-white bg-opacity-70 backdrop-blur-lg shadow-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-            <Link href="/" className="flex items-center space-x-2">
-            <Shield className="w-8 h-8 text-blue-600" />
-            <span className="font-extrabold text-blue-700 text-xl">CyberGuard AI</span>
-          </Link>
+              <Link href="/" className="flex items-center space-x-2">
+                <Shield className="w-8 h-8 text-blue-600" />
+                <span className="font-extrabold text-blue-700 text-xl">Cyber.AI</span>
+              </Link>
             </div>
             <div className="flex items-center space-x-4">
               <Bell className="w-6 h-6 text-blue-600 cursor-pointer" />
@@ -221,16 +227,13 @@ const HomePage = () => {
         </div>
       </nav>
 
-      {/* Main Content */}
       <div className="max-w-7xl mx-auto mt-8 p-6 flex space-x-6">
-        {/* Left Column: Onboarding and News Feed */}
         <motion.div
           className="w-1/3 space-y-6"
           initial={{ width: "33.333%" }}
           animate={{ width: isOnboardingOpen || isNewsFeedOpen ? "33.333%" : "0%" }}
           transition={{ duration: 0.3 }}
         >
-          {/* Onboarding Section */}
           <AnimatePresence>
             {isOnboardingOpen && (
               <motion.div
@@ -269,7 +272,6 @@ const HomePage = () => {
             )}
           </AnimatePresence>
 
-          {/* News Feed Section */}
           <AnimatePresence>
             {isNewsFeedOpen && (
               <motion.div
@@ -303,14 +305,13 @@ const HomePage = () => {
           </AnimatePresence>
         </motion.div>
 
-        {/* Right Column: Chatbot */}
         <motion.div
           className="flex-grow"
           animate={{ width: isChatbotMaximized ? "100%" : "66.666%" }}
           transition={{ duration: 0.3 }}
         >
           <div className="bg-white bg-opacity-70 backdrop-blur-lg rounded-lg shadow-lg h-[calc(100vh-8rem)] flex flex-col">
-            <div className="p-4 border-b border-blue-200 flex justify-between items-center">
+            <div  className="p-4 border-b border-blue-200 flex justify-between items-center">
               <h2 className="text-xl font-semibold text-blue-800">Cyber Bot</h2>
               <div className="flex space-x-2">
                 {!isOnboardingOpen && (
@@ -332,7 +333,6 @@ const HomePage = () => {
                   >
                     <ChevronRight size={20} />
                   </Button>
-                
                 )}
                 <Button
                   variant="ghost"
@@ -345,11 +345,33 @@ const HomePage = () => {
               </div>
             </div>
             <div className="flex-grow overflow-hidden">
-              <BizBot onComplete={handleAssessmentComplete} />
+              <BizBot onComplete={handleAssessmentComplete} onVulnerabilityReportGenerated={handleVulnerabilityReportGenerated} />
             </div>
           </div>
         </motion.div>
+        {vulnerabilityReport && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="bg-white bg-opacity-70 backdrop-blur-lg rounded-lg shadow-lg p-6"
+          >
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold text-blue-800">Vulnerability Report</h2>
+              <Button onClick={downloadReport} className="flex items-center space-x-2 bg-blue-500 hover:bg-blue-600 text-white">
+                <Download size={20} />
+                <span>Download Report</span>
+              </Button>
+            </div>
+            <pre className="bg-gray-100 p-4 rounded overflow-x-auto">
+              {JSON.stringify(vulnerabilityReport, null, 2)}
+            </pre>
+          </motion.div>
+      
+        )}
+        
       </div>
+      <VulnerabilityReport />
     </div>
   )
 }

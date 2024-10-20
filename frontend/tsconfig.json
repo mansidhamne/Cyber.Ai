@@ -21,6 +21,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/summarizer/page.jsx", "app/main/page.tsx", "components/ui/navbar-menu.jsx", "app/dashboard/page.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/summarizer/page.jsx", "app/main/page.tsx", "components/ui/navbar-menu.jsx", "app/dashboard/page.jsx", "components/DocuSummarizer.jsx"],
   "exclude": ["node_modules"]
 }
