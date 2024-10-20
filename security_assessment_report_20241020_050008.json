@@ -1,0 +1,216 @@
+{
+    "assessment_summary": {
+        "overall_risk_score": 0.5620683876908091,
+        "domain_scores": {
+            "authentication": {
+                "score": 0.6079495901411229,
+                "risk_level": "Medium"
+            },
+            "network_security": {
+                "score": 0.5418605514886704,
+                "risk_level": "High"
+            },
+            "compliance": {
+                "score": 0.5363950214426343,
+                "risk_level": "High"
+            }
+        },
+        "timestamp": "2024-10-20T05:00:08.565125"
+    },
+    "conversation_history": [
+        {
+            "question": "What authentication methods do you currently use for securing access to your systems?",
+            "answer": "Multi-Factor Authentication (MFA): Time-based One-Time Passwords (TOTP)",
+            "domain": "authentication",
+            "risk_score": 0.6079495901411229,
+            "risk_level": "Medium",
+            "timestamp": "2024-10-20T04:55:58.259481",
+            "recommendations": [
+                "Consider implementing: password complexity requirements",
+                "Consider implementing: regular credential rotation",
+                "Consider implementing: biometric authentication",
+                "Consider implementing: single sign-on"
+            ],
+            "reasoning": "Domain: authentication\nAlignment with best practices: 0.46\nPresence of risk indicators: 0.25"
+        },
+        {
+            "question": "What monitoring is in place for authentication?",
+            "answer": "Network Monitoring Tools: and regular audits",
+            "domain": "network_security",
+            "risk_score": 0.5559619638052854,
+            "risk_level": "Medium",
+            "timestamp": "2024-10-20T04:56:15.486009",
+            "recommendations": [
+                "Consider implementing: network segmentation",
+                "Consider implementing: encrypted traffic",
+                "Consider implementing: regular security scans",
+                "Consider implementing: intrusion detection"
+            ],
+            "reasoning": "Domain: network_security\nAlignment with best practices: 0.42\nPresence of risk indicators: 0.30"
+        },
+        {
+            "question": "How do you monitor network security?",
+            "answer": "using IDS and IPS",
+            "domain": "network_security",
+            "risk_score": 0.5533057219264182,
+            "risk_level": "Medium",
+            "timestamp": "2024-10-20T04:56:36.891448",
+            "recommendations": [
+                "Consider implementing: network segmentation",
+                "Consider implementing: encrypted traffic",
+                "Consider implementing: regular security scans",
+                "Consider implementing: intrusion detection",
+                "Consider implementing: traffic monitoring"
+            ],
+            "reasoning": "Domain: network_security\nAlignment with best practices: 0.22\nPresence of risk indicators: 0.12"
+        },
+        {
+            "question": "How often do you review network security configurations?",
+            "answer": "Quarterly Security Audits:",
+            "domain": "network_security",
+            "risk_score": 0.5163139687343077,
+            "risk_level": "Medium",
+            "timestamp": "2024-10-20T04:57:06.047822",
+            "recommendations": [
+                "Consider implementing: network segmentation",
+                "Consider implementing: encrypted traffic",
+                "Consider implementing: regular security scans",
+                "Consider implementing: intrusion detection",
+                "Consider implementing: traffic monitoring"
+            ],
+            "reasoning": "Domain: network_security\nAlignment with best practices: 0.22\nPresence of risk indicators: 0.19"
+        },
+        {
+            "question": "How often do you review network security configurations?",
+            "answer": "once in 2 years",
+            "domain": "compliance",
+            "risk_score": 0.5330237845967833,
+            "risk_level": "Medium",
+            "timestamp": "2024-10-20T04:57:19.426368",
+            "recommendations": [
+                "Consider implementing: regular audits",
+                "Consider implementing: documentation maintenance",
+                "Consider implementing: staff training",
+                "Consider implementing: incident response plan",
+                "Consider implementing: compliance monitoring"
+            ],
+            "reasoning": "Domain: compliance\nAlignment with best practices: 0.12\nPresence of risk indicators: 0.05"
+        },
+        {
+            "question": "What training is provided for compliance?",
+            "answer": "Phishing Simulation Exercises",
+            "domain": "compliance",
+            "risk_score": 0.5296958662414302,
+            "risk_level": "Medium",
+            "timestamp": "2024-10-20T04:57:54.173541",
+            "recommendations": [
+                "Consider implementing: regular audits",
+                "Consider implementing: documentation maintenance",
+                "Consider implementing: staff training",
+                "Consider implementing: incident response plan",
+                "Consider implementing: compliance monitoring"
+            ],
+            "reasoning": "Domain: compliance\nAlignment with best practices: 0.15\nPresence of risk indicators: 0.09"
+        },
+        {
+            "question": "How do you ensure ongoing compliance compliance?",
+            "answer": "regular audits and bi yearly training",
+            "domain": "compliance",
+            "risk_score": 0.6211119620129466,
+            "risk_level": "Medium",
+            "timestamp": "2024-10-20T04:58:32.869400",
+            "recommendations": [
+                "Consider implementing: documentation maintenance",
+                "Consider implementing: incident response plan",
+                "Consider implementing: compliance monitoring"
+            ],
+            "reasoning": "Domain: compliance\nAlignment with best practices: 0.44\nPresence of risk indicators: 0.20"
+        },
+        {
+            "question": "What training is provided for compliance?",
+            "answer": "we dont provide any training",
+            "domain": "compliance",
+            "risk_score": 0.461371690655748,
+            "risk_level": "Medium",
+            "timestamp": "2024-10-20T04:58:45.643422",
+            "recommendations": [
+                "Consider implementing: regular audits",
+                "Consider implementing: documentation maintenance",
+                "Consider implementing: incident response plan",
+                "Consider implementing: compliance monitoring"
+            ],
+            "reasoning": "Domain: compliance\nAlignment with best practices: 0.24\nPresence of risk indicators: 0.32"
+        },
+        {
+            "question": "How do you track compliance requirements?",
+            "answer": "Compliance with Data Privacy Regulations like GDPR",
+            "domain": "compliance",
+            "risk_score": 0.5574925178661942,
+            "risk_level": "Medium",
+            "timestamp": "2024-10-20T04:59:20.235182",
+            "recommendations": [
+                "Consider implementing: regular audits",
+                "Consider implementing: documentation maintenance",
+                "Consider implementing: staff training",
+                "Consider implementing: incident response plan",
+                "Consider implementing: compliance monitoring"
+            ],
+            "reasoning": "Domain: compliance\nAlignment with best practices: 0.22\nPresence of risk indicators: 0.10"
+        },
+        {
+            "question": "How do you ensure ongoing compliance compliance?",
+            "answer": "we dsont do anything of this sort",
+            "domain": "compliance",
+            "risk_score": 0.48558588077624637,
+            "risk_level": "Medium",
+            "timestamp": "2024-10-20T04:59:43.019249",
+            "recommendations": [
+                "Consider implementing: regular audits",
+                "Consider implementing: documentation maintenance",
+                "Consider implementing: staff training",
+                "Consider implementing: incident response plan",
+                "Consider implementing: compliance monitoring"
+            ],
+            "reasoning": "Domain: compliance\nAlignment with best practices: 0.18\nPresence of risk indicators: 0.21"
+        },
+        {
+            "question": "How do you track compliance requirements?",
+            "answer": "data security servers",
+            "domain": "compliance",
+            "risk_score": 0.5664834479490917,
+            "risk_level": "Medium",
+            "timestamp": "2024-10-20T05:00:00.630408",
+            "recommendations": [
+                "Consider implementing: regular audits",
+                "Consider implementing: documentation maintenance",
+                "Consider implementing: staff training",
+                "Consider implementing: incident response plan",
+                "Consider implementing: compliance monitoring"
+            ],
+            "reasoning": "Domain: compliance\nAlignment with best practices: 0.27\nPresence of risk indicators: 0.13"
+        }
+    ],
+    "recommendations": {
+        "authentication": [
+            "Consider implementing: password complexity requirements",
+            "Consider implementing: regular credential rotation",
+            "Consider implementing: biometric authentication",
+            "Consider implementing: single sign-on"
+        ],
+        "network_security": [
+            "Consider implementing: network segmentation",
+            "Consider implementing: encrypted traffic",
+            "Consider implementing: regular security scans",
+            "Consider implementing: intrusion detection",
+            "Consider implementing: traffic monitoring"
+        ],
+        "compliance": [
+            "Consider implementing: regular audits",
+            "Consider implementing: documentation maintenance",
+            "Consider implementing: staff training",
+            "Consider implementing: incident response plan",
+            "Consider implementing: compliance monitoring"
+        ]
+    },
+    "timestamp": "2024-10-20T05:00:08.565224"
+}
