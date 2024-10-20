@@ -1,9 +1,9 @@
 "use client"
-import { HoveredLink, Menu, MenuItem, ProductItem } from "../components/ui/navbar-menu";
+import { HoveredLink, Menu, MenuItem, ProductItem } from "../../components/ui/navbar-menu";
 import React, { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { Shield, ChevronDown, Search, MessageSquare, User, Eye, EyeOff, Lock, Unlock, Globe, Server } from 'lucide-react'
-import { Boxes } from "../components/ui/background-boxes";
+import { Boxes } from "../../components/ui/background-boxes";
 import { cn } from "@/lib/utils";
 import  Button  from "@/components/Button"
 import Button2 from "@/components/Button2"
@@ -17,9 +17,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { SignIn } from "@clerk/nextjs";
-import Logo from "../lib/CyberGuard AI.png"
-import Image from "next/image";
-import Link from "next/link";
+
 const DigitalRain = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
@@ -211,42 +209,35 @@ export default function LandingPage() {
   )
 }
 
-
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "@/components/ui/sheet"
-
-
 function Navbar({ className }: { className?: string }) {
+  const [active, setActive] = useState<string | null>(null);
   return (
-    <nav
-      className={cn(
-        "fixed top-0 left-0 right-0 z-50 bg-white shadow-sm px-10 rounded-lg ",
-        className
-      )}
+    <div
+      className={cn("fixed top-10 inset-x-0 max-w-2xl mx-auto z-50 font-medium text-lg", className)}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 px-10" >
-        <div className="flex justify-between items-center h-16">
-          <Link href="/" className="flex items-center space-x-2">
-            <Shield className="w-8 h-8 text-blue-600" />
-            <span className="font-extrabold text-blue-700 text-xl">CyberGuard AI</span>
-          </Link>
-          
-          <div className="hidden md:flex items-center space-x-6 font-semibold">
-            <a href="/services">Services</a>
-            <a href="/products">Products</a>
-            <a href="/pricing">Pricing</a>
-            <a href="/about">About</a>
-            <a href="/contact">Contact</a>
+      <Menu setActive={setActive}>
+        <MenuItem setActive={setActive} active={active} item="Services">
+          <div className="flex flex-col space-y-4 text-sm">
+            <HoveredLink href="/web-dev">Web Development</HoveredLink>
+            <HoveredLink href="/interface-design">Interface Design</HoveredLink>
+            <HoveredLink href="/seo">Search Engine Optimization</HoveredLink>
+            <HoveredLink href="/branding">Branding</HoveredLink>
           </div>
-          
-         
-          
-         
-        </div>
-      </div>
-    </nav>
-  )
+        </MenuItem>
+        <MenuItem setActive={setActive} active={active} item="Products">
+          <div className="  text-sm grid grid-cols-2 gap-10 p-4">
+           
+          </div>
+        </MenuItem>
+        <MenuItem setActive={setActive} active={active} item="Pricing">
+          <div className="flex flex-col space-y-4 text-sm">
+            <HoveredLink href="/hobby">Hobby</HoveredLink>
+            <HoveredLink href="/individual">Individual</HoveredLink>
+            <HoveredLink href="/team">Team</HoveredLink>
+            <HoveredLink href="/enterprise">Enterprise</HoveredLink>
+          </div>
+        </MenuItem>
+      </Menu>
+    </div>
+  );
 }
