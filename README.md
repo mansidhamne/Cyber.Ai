@@ -41,6 +41,7 @@ We needed to heavily rely on understanding the **context** of what was present i
 4. FastAPI
 5. Next.js
 
-
+<h4>Future Improvements</h4>
+We think that a right exit strategy is equally important as to determine when to stop asking the questions and generate the report based on how 'complete' the information gathered is. For this we will be exploring knowledge graphs along with google's page ranking approach to determine the completness of the knowledge graph of the uploaded documentation
 
 
