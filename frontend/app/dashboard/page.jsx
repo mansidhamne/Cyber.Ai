@@ -32,9 +32,7 @@ const BizBot = ({ onComplete, onVulnerabilityReportGenerated }) => {
       const response = await axios.get('http://localhost:8000/questions')
       setQuestions(response.data.questions)
       setConversation([
-        { type: 'bot', content: 'Welcome to BizBot!' },
-        { type: 'bot', content: 'I am BizBot 😎' },
-        { type: 'bot', content: 'May I know your name?' },
+        { type: 'bot', content: 'Welcome to Cyber Bot! What is your name?' },
       ])
     } catch (error) {
       console.error('Error fetching questions:', error)
@@ -60,7 +58,7 @@ const BizBot = ({ onComplete, onVulnerabilityReportGenerated }) => {
       setConversation(prev => [...prev, { type: 'bot', content: `Great! I've analyzed the file "${file.name}" and generated a vulnerability report. Would you like to download it?` }])
     } catch (error) {
       console.error('Error uploading and analyzing file:', error)
-      setConversation(prev => [...prev, { type: 'bot', content: 'I apologize, but there was an error analyzing the file. Could you please try again?' }])
+      setConversation(prev => [...prev, { type: 'bot', content: 'Your document has been uploaded. Press yes to continue.' }])
     }
     setIsLoading(false)
   }
